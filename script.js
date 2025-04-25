@@ -10,6 +10,7 @@ const currentScoreEl = document.getElementById("current-score");
 const highScoreEl = document.getElementById("high-score");
 highScoreEl.innerText = `High Score: ${highScore}`;
 const h2 = document.querySelector("h2");
+const startBtn = document.getElementById("start-btn");
 
 // Sound effects
 const soundMap = {
@@ -19,12 +20,18 @@ const soundMap = {
   purple: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3")
 };
 
-document.addEventListener("keypress", () => {
+// Start game on keypress (desktop) or click/tap (mobile)
+document.addEventListener("keypress", startGame);
+document.addEventListener("click", startGame);
+startBtn.addEventListener("click", startGame);
+
+function startGame() {
   if (!started) {
     started = true;
+    startBtn.style.display = "none";
     nextSequence();
   }
-});
+}
 
 function nextSequence() {
   userSeq = [];
@@ -49,9 +56,9 @@ function playSequence() {
     i++;
     if (i >= gameSeq.length) {
       clearInterval(interval);
-      setTimeout(() => acceptingInput = true, 300); // enable input after sequence
+      setTimeout(() => acceptingInput = true, 300);
     }
-  }, 700); // delay between each flash
+  }, 700);
 }
 
 function flashButton(btn) {
@@ -83,7 +90,7 @@ function checkAnswer(currentIndex) {
     }
   } else {
     document.body.classList.add("game-over");
-    h2.innerHTML = `Game Over! Score: <b>${level}</b><br>Press any key to restart.`;
+    h2.innerHTML = `Game Over! Score: <b>${level}</b><br>Press any key or click Start Game to restart.`;
 
     setTimeout(() => document.body.classList.remove("game-over"), 300);
 
@@ -103,6 +110,7 @@ function resetGame() {
   started = false;
   acceptingInput = false;
   currentScoreEl.innerText = "Score: 0";
+  startBtn.style.display = "inline-block";
 }
 
 document.querySelectorAll(".btn").forEach(btn => {
