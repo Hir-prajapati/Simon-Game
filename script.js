@@ -58,11 +58,17 @@ function playSequence() {
     }
   }, 700);
 }
-
 function flashButton(btn) {
+  btn.classList.remove("flash"); // Reset if already active
+  void btn.offsetWidth; // Force reflow (important on mobile)
   btn.classList.add("flash");
   setTimeout(() => btn.classList.remove("flash"), 300);
 }
+
+// function flashButton(btn) {
+//   btn.classList.add("flash");
+//   setTimeout(() => btn.classList.remove("flash"), 300);
+// }
 
 function playSound(color) {
   soundMap[color].currentTime = 0;
