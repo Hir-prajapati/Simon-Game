@@ -2,24 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simon Game</title>
-  <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="landing-container">
-    <img src="https://cdn.vectorstock.com/i/1000v/59/52/lets-play-neon-sign-game-logo-vector-23935952.jpg" alt="Simon Logo" class="logo">
-    <h1 class="title">Simon Game</h1>
-    <p class="subtitle">Test your memory & reflexes</p>
-    <button class="start-btn" onclick="startGame()">Start Game</button>
-    <br><br>
-    <a href="https://www.youtube.com/watch?v=1Yqj76Q4jJ4" target="_blank" class="how-to-link">▶️ How to Play</a>
-</div>
 
-  <script>
-    function startGame() {
-      window.location.href = "index.html"; // Link to your actual game file
-    }
-  </script>
+  <h1>Simon Game</h1>
+  <h2>Press any key to Start</h2>
+
+  <div class="circle-container">
+    <!-- Four color buttons -->
+    <div class="btn top-left red" id="red">
+      <span class="ripple"></span>
+
+    </div>
+    <div class="btn top-right yellow" id="yellow">
+      <span class="ripple"></span>
+
+    </div>
+    <div class="btn bottom-left green" id="green">
+      <span class="ripple"></span>
+
+    </div>
+    <div class="btn bottom-right purple" id="purple">
+      <span class="ripple"></span>
+
+    </div>
+
+    <!-- Center logo -->
+    <div class="center-logo"></div>
+  </div>
+
+  <h3 id="current-score">Score: 0</h3>
+  <h3 id="high-score">High Score: 0</h3>
+
+  <script src="script.js"></script>
 </body>
 </html>
