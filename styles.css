@@ -85,10 +85,16 @@ h1, h2, h3 {
 }
 
 /* Flash effects */
-.flash {
+ /* .flash {
   filter: brightness(900%);
-  /* background-color: #11e7a7; */
+  background-color: #11e7a7;
+}  */
+.flash {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
 }
+
+
 
 .userflash {
   filter: brightness(150%);
