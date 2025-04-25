@@ -1,0 +1,110 @@
+let gameSeq = [];
+let userSeq = [];
+let colors = ["red", "yellow", "green", "purple"];
+let level = 0;
+let started = false;
+let highScore = localStorage.getItem("highScore") || 0;
+let acceptingInput = false;
+
+const currentScoreEl = document.getElementById("current-score");
+const highScoreEl = document.getElementById("high-score");
+highScoreEl.innerText = `High Score: ${highScore}`;
+const h2 = document.querySelector("h2");
+
+// Sound effects
+const soundMap = {
+  red: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"),
+  yellow: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"),
+  green: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"),
+  purple: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3")
+};
+
+document.addEventListener("keypress", () => {
+  if (!started) {
+    started = true;
+    nextSequence();
+  }
+});
+
+function nextSequence() {
+  userSeq = [];
+  level++;
+  h2.innerText = `Level ${level}`;
+  currentScoreEl.innerText = `Score: ${level}`;
+
+  const randomColor = colors[Math.floor(Math.random() * 4)];
+  gameSeq.push(randomColor);
+
+  acceptingInput = false;
+  playSequence();
+}
+
+function playSequence() {
+  let i = 0;
+  const interval = setInterval(() => {
+    const color = gameSeq[i];
+    const btn = document.getElementById(color);
+    playSound(color);
+    flashButton(btn);
+    i++;
+    if (i >= gameSeq.length) {
+      clearInterval(interval);
+      setTimeout(() => acceptingInput = true, 300); // enable input after sequence
+    }
+  }, 700); // delay between each flash
+}
+
+function flashButton(btn) {
+  btn.classList.add("flash");
+  setTimeout(() => btn.classList.remove("flash"), 300);
+}
+
+function playSound(color) {
+  soundMap[color].currentTime = 0;
+  soundMap[color].play();
+}
+
+function handleUserClick() {
+  if (!acceptingInput) return;
+
+  const color = this.id;
+  userSeq.push(color);
+  playSound(color);
+  flashButton(this);
+
+  checkAnswer(userSeq.length - 1);
+}
+
+function checkAnswer(currentIndex) {
+  if (userSeq[currentIndex] === gameSeq[currentIndex]) {
+    if (userSeq.length === gameSeq.length) {
+      acceptingInput = false;
+      setTimeout(nextSequence, 1000);
+    }
+  } else {
+    document.body.classList.add("game-over");
+    h2.innerHTML = `Game Over! Score: <b>${level}</b><br>Press any key to restart.`;
+
+    setTimeout(() => document.body.classList.remove("game-over"), 300);
+
+    if (level > highScore) {
+      localStorage.setItem("highScore", level);
+      highScoreEl.innerText = `High Score: ${level}`;
+    }
+
+    resetGame();
+  }
+}
+
+function resetGame() {
+  level = 0;
+  gameSeq = [];
+  userSeq = [];
+  started = false;
+  acceptingInput = false;
+  currentScoreEl.innerText = "Score: 0";
+}
+
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("click", handleUserClick);
+});
