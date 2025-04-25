@@ -67,21 +67,6 @@ function playSequence() {
   showStep(); // start showing the sequence
 }
 
-
-// function playSequence() {
-//   let i = 0;
-//   const interval = setInterval(() => {
-//     const color = gameSeq[i];
-//     const btn = document.getElementById(color);
-//     playSound(color);
-//     flashButton(btn);
-//     i++;
-//     if (i >= gameSeq.length) {
-//       clearInterval(interval);
-//       setTimeout(() => acceptingInput = true, 300);
-//     }
-//   }, 700);
-// }
 function flashButton(btn) {
   btn.classList.remove("flash"); // Reset if already active
   void btn.offsetWidth; // Force reflow (important on mobile)
@@ -89,10 +74,6 @@ function flashButton(btn) {
   setTimeout(() => btn.classList.remove("flash"), 300);
 }
 
-// function flashButton(btn) {
-//   btn.classList.add("flash");
-//   setTimeout(() => btn.classList.remove("flash"), 300);
-// }
 
 function playSound(color) {
   soundMap[color].currentTime = 0;
