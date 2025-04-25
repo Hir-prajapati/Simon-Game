@@ -10,7 +10,7 @@ const currentScoreEl = document.getElementById("current-score");
 const highScoreEl = document.getElementById("high-score");
 highScoreEl.innerText = `High Score: ${highScore}`;
 const h2 = document.querySelector("h2");
-const startBtn = document.getElementById("start-btn");
+const logo = document.querySelector(".center-logo"); // target the logo div
 
 // Sound effects
 const soundMap = {
@@ -20,15 +20,13 @@ const soundMap = {
   purple: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3")
 };
 
-// Start game on keypress (desktop) or click/tap (mobile)
+// Start game on keypress or center logo click
 document.addEventListener("keypress", startGame);
-document.addEventListener("click", startGame);
-startBtn.addEventListener("click", startGame);
+logo.addEventListener("click", startGame);
 
 function startGame() {
   if (!started) {
     started = true;
-    startBtn.style.display = "none";
     nextSequence();
   }
 }
@@ -90,7 +88,7 @@ function checkAnswer(currentIndex) {
     }
   } else {
     document.body.classList.add("game-over");
-    h2.innerHTML = `Game Over! Score: <b>${level}</b><br>Press any key or click Start Game to restart.`;
+    h2.innerHTML = `Game Over! Score: <b>${level}</b><br>Click the simon button or press any key to restart.`;
 
     setTimeout(() => document.body.classList.remove("game-over"), 300);
 
@@ -110,7 +108,6 @@ function resetGame() {
   started = false;
   acceptingInput = false;
   currentScoreEl.innerText = "Score: 0";
-  startBtn.style.display = "inline-block";
 }
 
 document.querySelectorAll(".btn").forEach(btn => {
