@@ -43,21 +43,45 @@ function nextSequence() {
   acceptingInput = false;
   playSequence();
 }
-
 function playSequence() {
+  acceptingInput = false;
   let i = 0;
-  const interval = setInterval(() => {
+
+  function showStep() {
     const color = gameSeq[i];
     const btn = document.getElementById(color);
     playSound(color);
     flashButton(btn);
+    
     i++;
-    if (i >= gameSeq.length) {
-      clearInterval(interval);
-      setTimeout(() => acceptingInput = true, 300);
+    if (i < gameSeq.length) {
+      setTimeout(showStep, 800); // wait before flashing next button
+    } else {
+      // Re-enable user input after short delay
+      setTimeout(() => {
+        acceptingInput = true;
+      }, 500);
     }
-  }, 700);
+  }
+
+  showStep(); // start showing the sequence
 }
+
+
+// function playSequence() {
+//   let i = 0;
+//   const interval = setInterval(() => {
+//     const color = gameSeq[i];
+//     const btn = document.getElementById(color);
+//     playSound(color);
+//     flashButton(btn);
+//     i++;
+//     if (i >= gameSeq.length) {
+//       clearInterval(interval);
+//       setTimeout(() => acceptingInput = true, 300);
+//     }
+//   }, 700);
+// }
 function flashButton(btn) {
   btn.classList.remove("flash"); // Reset if already active
   void btn.offsetWidth; // Force reflow (important on mobile)
